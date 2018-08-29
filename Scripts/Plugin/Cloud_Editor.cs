@@ -5,65 +5,73 @@
 //  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 
 namespace EPPZ.Cloud.Plugin
 {
 
 
-	public class Cloud_Editor : Cloud
-	{
+    public class Cloud_Editor : Cloud
+    {
 
 
-		Model.Simulation.KeyValueStore keyValueStore { get { return EPPZ.Cloud.Cloud.SimulationKeyValueStore(); } }
-		
+        Model.Simulation.KeyValueStore keyValueStore { get { return EPPZ.Cloud.Cloud.SimulationKeyValueStore(); } }
 
-	#region Features
 
-		public override void Synchronize()
-		{ keyValueStore.SimulateCloudDidChange(); }
+    #region Features
 
-		public override string StringForKey(string key)
-		{ return keyValueStore.KeyValuePairForKey(key).stringValue; }
+        public override void Synchronize()
+        { keyValueStore.SimulateCloudDidChange(); }
 
-		public override void SetStringForKey(string value, string key)
-		{
-			Log("Cloud_Editor.SetStringForKey(`"+value+"`, `"+key+"`)");
-			keyValueStore.KeyValuePairForKey(key).stringValue = value;
-		}
+        public override string StringForKey(string key)
+        { return keyValueStore.KeyValuePairForKey(key).stringValue; }
 
-		public override float FloatForKey(string key)
-		{ return keyValueStore.KeyValuePairForKey(key).floatValue; }
+        public override void SetStringForKey(string value, string key)
+        {
+            Log("Cloud_Editor.SetStringForKey(`"+value+"`, `"+key+"`)");
+            keyValueStore.KeyValuePairForKey(key).stringValue = value;
+        }
 
-		public override void SetFloatForKey(float value, string key)
-		{
-			Log("Cloud_Editor.SetFloatForKey(`"+value+"`, `"+key+"`)");
-			keyValueStore.KeyValuePairForKey(key).floatValue = value;
-		}
+        public override float FloatForKey(string key)
+        { return keyValueStore.KeyValuePairForKey(key).floatValue; }
 
-		public override int IntForKey(string key)
-		{ return keyValueStore.KeyValuePairForKey(key).intValue; }
+        public override void SetFloatForKey(float value, string key)
+        {
+            Log("Cloud_Editor.SetFloatForKey(`"+value+"`, `"+key+"`)");
+            keyValueStore.KeyValuePairForKey(key).floatValue = value;
+        }
 
-		public override void SetIntForKey(int value, string key)
-		{
-			Log("Cloud_Editor.SetIntForKey(`"+value+"`, `"+key+"`)");
-			keyValueStore.KeyValuePairForKey(key).intValue = value;
-		}
+        public override int IntForKey(string key)
+        { return keyValueStore.KeyValuePairForKey(key).intValue; }
 
-		public override bool BoolForKey(string key)
-		{ return keyValueStore.KeyValuePairForKey(key).boolValue; }
+        public override void SetIntForKey(int value, string key)
+        {
+            Log("Cloud_Editor.SetIntForKey(`"+value+"`, `"+key+"`)");
+            keyValueStore.KeyValuePairForKey(key).intValue = value;
+        }
 
-		public override void SetBoolForKey(bool value, string key)
-		{
-			Log("Cloud_Editor.SetBoolForKey(`"+value+"`, `"+key+"`)");
-			keyValueStore.KeyValuePairForKey(key).boolValue = value;
-		}
+        public override bool BoolForKey(string key)
+        { return keyValueStore.KeyValuePairForKey(key).boolValue; }
 
-	#endregion
+        public override void SetBoolForKey(bool value, string key)
+        {
+            Log("Cloud_Editor.SetBoolForKey(`"+value+"`, `"+key+"`)");
+            keyValueStore.KeyValuePairForKey(key).boolValue = value;
+        }
 
-	
-	}
+        public override void RemoveObjectForKey(string key)
+        {
+            Log("Cloud_iOS.RemoveObjectForKey(`"+key+"`)");
+            keyValueStore.RemoveObjectForKey(key);
+        }
+
+        public override bool HasKey(string key)
+        {
+            Log("Cloud_iOS.HasKey(`"+key+"`)");
+            return keyValueStore.HasKey(key);
+        }
+
+    #endregion
+
+
+    }
 }

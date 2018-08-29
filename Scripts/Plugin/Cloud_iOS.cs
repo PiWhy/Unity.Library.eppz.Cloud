@@ -23,33 +23,39 @@ namespace EPPZ.Cloud.Plugin
 
 		[DllImport ("__Internal")]
 		private static extern void EPPZ_Cloud_InitializeWithGameObjectName(string gameObjectName);
-    	
+
 		[DllImport ("__Internal")]
 		private static extern bool EPPZ_Cloud_Synchronize();
-    
+
 		[DllImport ("__Internal")]
     	private static extern string EPPZ_Cloud_StringForKey(string key);
 
 		[DllImport ("__Internal")]
     	private static extern void EPPZ_Cloud_SetStringForKey(string value, string key);
-    
+
 		[DllImport ("__Internal")]
     	private static extern float EPPZ_Cloud_FloatForKey(string key);
 
 		[DllImport ("__Internal")]
     	private static extern void EPPZ_Cloud_SetFloatForKey(float value, string key);
-    
+
 		[DllImport ("__Internal")]
     	private static extern int EPPZ_Cloud_IntForKey(string key);
 
 		[DllImport ("__Internal")]
     	private static extern void EPPZ_Cloud_SetIntForKey(int value, string key);
-    
+
 		[DllImport ("__Internal")]
     	private static extern bool EPPZ_Cloud_BoolForKey(string key);
 
 		[DllImport ("__Internal")]
     	private static extern void EPPZ_Cloud_SetBoolForKey(bool value, string key);
+
+		[DllImport ("__Internal")]
+		private static extern void EPPZ_Cloud_RemoveObjectForKey(string key);
+
+		[DllImport ("__Internal")]
+		private static extern bool EPPZ_Cloud_HasKey(string key);
 
 	#endregion
 
@@ -69,7 +75,7 @@ namespace EPPZ.Cloud.Plugin
 			// Parse JSON.
 			iOS.UserInfo userInfo = new iOS.UserInfo();
 			JsonUtility.FromJsonOverwrite(message, userInfo);
-			
+
 			// Get notification payload.
 			ChangeReason changeReason = (ChangeReason)userInfo.NSUbiquitousKeyValueStoreChangeReasonKey;
 			string[] changedKeys = userInfo.NSUbiquitousKeyValueStoreChangedKeysKey;
@@ -115,6 +121,18 @@ namespace EPPZ.Cloud.Plugin
 		{
 			Log("Cloud_iOS.SetBoolForKey(`"+value+"`, `"+key+"`)");
 			EPPZ_Cloud_SetBoolForKey(value, key);
+		}
+
+		public override void RemoveObjectForKey(string key)
+		{
+			Log("Cloud_iOS.RemoveObjectForKey(`"+key+"`)");
+			EPPZ_Cloud_RemoveObjectForKey(key);
+		}
+
+		public override bool HasKey(string key)
+		{
+			Log("Cloud_iOS.HasKey(`"+key+"`)");
+			return EPPZ_Cloud_HasKey(key);
 		}
 
 	#endregion

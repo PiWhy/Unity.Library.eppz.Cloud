@@ -19,13 +19,13 @@ namespace EPPZ.Cloud.Model.Simulation
     using Plugin;
 
 
-	[CreateAssetMenu(fileName = "Key-value store simulation", menuName = "eppz!/Cloud/Key-value store simulation")]
-	public class KeyValueStore : ScriptableObject
+    [CreateAssetMenu(fileName = "Key-value store simulation", menuName = "eppz!/Cloud/Key-value store simulation")]
+    public class KeyValueStore : ScriptableObject
     {
 
 
         public ChangeReason changeReason;
-		public KeyValuePair[] keyValuePairs;
+        public List<KeyValuePair> keyValuePairs;
         public Cloud_Editor plugin;
 
 
@@ -36,15 +36,37 @@ namespace EPPZ.Cloud.Model.Simulation
         }
 
         public virtual Simulation.KeyValuePair KeyValuePairForKey(string key)
-		{
-			foreach (KeyValuePair eachKeyValuePair in keyValuePairs)
-			{
-				if (eachKeyValuePair.key == key)
-				{ return eachKeyValuePair; }
-			}
+        {
+            foreach (KeyValuePair eachKeyValuePair in keyValuePairs)
+            {
+                if (eachKeyValuePair.key == key)
+                { return eachKeyValuePair; }
+            }
             Debug.LogWarning("eppz! Cloud: No Key-value pair defined for key `"+key+"`");
-			return null;
-		}
+            return null;
+        }
+
+        public void RemoveObjectForKey(string key)
+        {
+            foreach (KeyValuePair eachKeyValuePair in keyValuePairs)
+            {
+                if (eachKeyValuePair.key == key)
+                {
+                    keyValuePairs.Remove(eachKeyValuePair);
+                }
+            }
+        }
+
+        public virtual bool HasKey(string key)
+        {
+            foreach (KeyValuePair eachKeyValuePair in keyValuePairs)
+            {
+                if (eachKeyValuePair.key == key)
+                { return true; }
+            }
+
+            return false;
+        }
 
         [ContextMenu("Simulate `CloudDidChange`")]
         public virtual void SimulateCloudDidChange()
@@ -68,9 +90,6 @@ namespace EPPZ.Cloud.Model.Simulation
 
             // Invoke `OnKeyChanged` (simulating plugin call).
             EPPZ.Cloud.Cloud.InvokeOnKeysChanged(changedKeys.ToArray(), changeReason);
-        }   
-	}
+        }
+    }
 }
-
-		
-		

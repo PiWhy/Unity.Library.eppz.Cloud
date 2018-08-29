@@ -36,7 +36,7 @@ namespace EPPZ.Cloud
 		// Inspector hooks.
 		public Model.Settings settings;
 		public Model.Simulation.KeyValueStore simulationKeyValueStore;
-		
+
 		// Delegate.
 		public enum Should { UpdateKeys, StopUpdateKeys }
 		public delegate Should OnCloudChange(string[] changedKeys, ChangeReason changeReason);
@@ -123,6 +123,12 @@ namespace EPPZ.Cloud
 		public static bool BoolForKey(string key)
 		{ return _instance.plugin.BoolForKey(key); }
 
+		public static void RemoveObjectForKey(string key)
+		{ _instance.plugin.RemoveObjectForKey(key); }
+
+		public static bool HasKey(string key)
+		{ return _instance.plugin.HasKey(key); }
+
 		public static ChangeReason LatestChangeReason()
 		{ return _instance.latestChangeReason; }
 
@@ -147,8 +153,8 @@ namespace EPPZ.Cloud
 		}
 
 	#endregion
-	
-	
+
+
 	#region Registering actions
 
 		void _RemoveOnKeyChangeAction(string key, object action)
@@ -206,6 +212,6 @@ namespace EPPZ.Cloud
 
 	#endregion
 
-	
+
 	}
 }

@@ -17,7 +17,7 @@ namespace EPPZ.Cloud.Plugin
 	public class Cloud
 	{
 
-		
+
 		protected ICloud cloudObject;
 
 
@@ -65,13 +65,16 @@ namespace EPPZ.Cloud.Plugin
 		public virtual bool BoolForKey(string key) { return false; }
 		public virtual void SetBoolForKey(bool value, string key) { }
 
+		public virtual void RemoveObjectForKey(string key) { }
+		public virtual bool HasKey(string key) { return false; }
+
 		public virtual void CloudDidChange(string message) { }
 
 		protected void Log(string message)
 		{ EPPZ.Cloud.Cloud.Log(message); }
 
 	#endregion
-	
+
 
 	}
 }
